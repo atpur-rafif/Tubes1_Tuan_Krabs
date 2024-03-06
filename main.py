@@ -5,6 +5,7 @@ from colorama import Back, Fore, Style, init
 from game.api import Api
 from game.board_handler import BoardHandler
 from game.bot_handler import BotHandler
+from game.logic.gradient import GradientLogic
 from game.logic.random import RandomLogic
 from game.logic.test import TestLogic
 from game.util import *
@@ -15,7 +16,8 @@ BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Random": RandomLogic,
-    "Test": TestLogic
+    "Test": TestLogic,
+    "Gradient": GradientLogic
 }
 
 ###############################################################################
@@ -168,6 +170,7 @@ move_delay = board.minimum_delay_between_moves / 1000
 # Game play loop
 #
 ###############################################################################
+DELTA = 0.1
 while True:
     # Find our info among the bots on the board
     board_bot = board.get_bot(bot)
@@ -184,7 +187,7 @@ while True:
             "Invalid move will be ignored."
             + f" Your move: ({delta_x}, {delta_y}). Your position: ({board_bot.position.x}, {board_bot.position.y})",
         )
-        sleep(1)
+        sleep(DELTA)
         continue
 
     try:
@@ -205,7 +208,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(1)
+    sleep(DELTA)
 
 
 ###############################################################################
