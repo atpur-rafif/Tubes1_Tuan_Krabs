@@ -1,14 +1,14 @@
 import argparse
 from time import sleep
 
-from colorama import Back, Fore, Style, init
+from colorama import Fore, Style, init
 from game.api import Api
 from game.board_handler import BoardHandler
 from game.bot_handler import BotHandler
+from game.logic.biggest import BiggestLogic
 from game.logic.gradient import GradientLogic
-from game.logic.jarakTerdekat import jarakTerdekat
+from game.logic.nearest import NearestLogic
 from game.logic.random import RandomLogic
-from game.logic.test import TestLogic
 from game.util import *
 from game.logic.base import BaseLogic
 
@@ -17,8 +17,8 @@ BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Random": RandomLogic,
-    "Test": TestLogic,
-    "Nearest": jarakTerdekat,
+    "Biggest": BiggestLogic,
+    "Nearest": NearestLogic,
     "Gradient": GradientLogic
 }
 
@@ -172,7 +172,7 @@ move_delay = board.minimum_delay_between_moves / 1000
 # Game play loop
 #
 ###############################################################################
-DELTA = 1
+DELTA = 0.1
 while True:
     # Find our info among the bots on the board
     board_bot = board.get_bot(bot)

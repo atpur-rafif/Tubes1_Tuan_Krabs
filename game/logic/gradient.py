@@ -25,9 +25,8 @@ class GradientLogic(BaseLogic):
         ]
 
     def base_fn(self, inp: Position, distance_offset: int):
-        total = 0
+        total = 0.0
         inventory_filled = float(self.bot.properties.diamonds) / float(self.inventory_size)
-
 
         bots = self.board.bots
         diamonds = self.board.diamonds
@@ -43,7 +42,7 @@ class GradientLogic(BaseLogic):
             if points == 1:
                 total += distance ** -2
             else:
-                total += (distance ** -0.3) * points
+                total += (distance ** -1) * points
 
         for button in redButton_target:
             pos = button.position
@@ -66,10 +65,9 @@ class GradientLogic(BaseLogic):
                     other_inventory = float(bot.properties.diamonds) / float(self.inventory_size)
                     total += (other_inventory * 2) * (distance ** -2)
 
-        if self.bot.properties.diamonds > 0:
-            base = self.bot.properties.base
-            distance = max(manhattan_distance(inp, base) + distance_offset, 0.1)
-            total += (2 * inventory_filled) * (distance ** -2)
+        base = self.bot.properties.base
+        distance = max(manhattan_distance(inp, base) + distance_offset, 0.1)
+        total += (2 * inventory_filled) * (distance ** -2)
 
         return total
 
@@ -83,8 +81,8 @@ class GradientLogic(BaseLogic):
                 return 0
             return base_value
 
-        tel0_value = self.base_fn(tel1, manhattan_distance(tel0, inp) + 1)
-        tel1_value = self.base_fn(tel0, manhattan_distance(tel1, inp) + 1)
+        tel0_value = self.base_fn(tel1, manhattan_distance(tel0, inp))
+        tel1_value = self.base_fn(tel0, manhattan_distance(tel1, inp))
         return base_value + tel0_value + tel1_value
 
     def next_move(self, board_bot: GameObject, board: Board):

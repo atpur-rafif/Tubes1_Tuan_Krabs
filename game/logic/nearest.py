@@ -7,7 +7,7 @@ from game.util import get_direction
 
 MAX_DIAMOND = 5
 
-class jarakTerdekat(BaseLogic):
+class NearestLogic(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None
