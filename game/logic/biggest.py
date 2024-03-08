@@ -30,6 +30,11 @@ class Biggest(BaseLogic):
             # Move to base
             return self.goto(bot_positions,base)
         
+        teleport_target: list[GameObject] = list(filter(lambda x: x.type == "TeleportGameObject" and x.type != None, boardObj))
+        teleport_positions = list(map(lambda x: x.position, teleport_target))
+        targetTeleportIn = min(teleport_positions, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y))
+        targetTeleportOut = max(teleport_positions, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y))
+
         red_button_list : list[GameObject] = list(filter(lambda x: x.type == "DiamondButtonGameObject" and x.type != None, boardObj)) 
         red_button_pos = list(map(lambda x: x.position, red_button_list))
 
@@ -82,6 +87,9 @@ class Biggest(BaseLogic):
         if self.jarak(bot_positions, self.target) > self.jarak(bot_positions, red_button_pos[0]):
             self.target = red_button_pos[0]
 
+        if self.jarak(targetTeleportOut, self.target) + self.jarak(targetTeleportIn, bot_positions) < self.jarak(bot_positions, self.target):
+            self.target = targetTeleportIn
+            
         print("Target: ", self.target)
         delta_x, delta_y = get_direction(
             bot_positions.x,
