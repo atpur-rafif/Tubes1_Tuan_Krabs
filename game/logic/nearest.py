@@ -12,9 +12,6 @@ class NearestLogic(BaseLogic):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None
         self.current_direction = 0
-
-    def goto(self, bot_position: tuple[int, int], target_position: tuple[int, int]):
-        return get_direction(bot_position.x, bot_position.y, target_position.x, target_position.y)
     
     def intJarak (self, Asal: Position, Tujuan: Position):
         return (abs(Asal.x - Tujuan.x) + abs(Asal.y - Tujuan.y))
@@ -50,6 +47,11 @@ class NearestLogic(BaseLogic):
             jarakToBase_withTeleport = self.intJarak(mybot_position,targetTeleportIn) + self.intJarak(targetTeleportOut,base_position)
 
             if jarakToBase <= jarakToBase_withTeleport:
+                if self.intJarak(mybot_position, base_position) == 0:
+                    if mybot_position.x == 14:
+                        return get_direction(mybot_position.x, mybot_position.y, mybot_position.x - 1, mybot_position.y)
+                    else:  
+                        return get_direction(mybot_position.x, mybot_position.y, mybot_position.x + 1, mybot_position.y)
                 return get_direction(mybot_position.x, mybot_position.y, base_position.x, base_position.y)
             else:
                 if self.intJarak(mybot_position,targetTeleportIn) == 0:
