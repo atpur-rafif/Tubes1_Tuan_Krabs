@@ -18,17 +18,21 @@ class Biggest(BaseLogic):
         return get_direction(bot_position.x, bot_position.y, target_position.x, target_position.y)
 
     def jarak(self, bot_position: tuple[int, int], target_position: tuple[int, int]):
-        return (bot_position.x-target_position.x)**2 + (bot_position.y+target_position.y)**2
+        return (bot_position.x-target_position.x)**2 + (bot_position.y-target_position.y)**2
 
     def next_move(self, board_bot: GameObject, board: Board):
         bot_properties = board_bot.properties
         bot_positions = board_bot.position
         base = board_bot.properties.base
+        boardObj = board.game_objects
         # Analyze new state
         if bot_properties.diamonds == 5:
             # Move to base
             return self.goto(bot_positions,base)
         
+        red_button_list : list[GameObject] = list(filter(lambda x: x.type == "DiamondButtonGameObject" and x.type != None, boardObj)) 
+        red_button_pos = list(map(lambda x: x.position, red_button_list))
+
         diamond_target: list[GameObject] = list(filter(lambda v: v.properties.points <= MAX_DIAMOND - bot_properties.diamonds, board.diamonds))
         diamond_positions = list(map(lambda v: v.position, diamond_target))
 
@@ -45,15 +49,14 @@ class Biggest(BaseLogic):
                             if i+k == element.x and j+l == element.y:
                                 diamond_count += 1
                                 temp_biggest_diamond.append(element)
-                if diamond_count >= biggest_diamond:
+                if diamond_count > biggest_diamond:
                     biggest_diamond = diamond_count
                     print(diamond_count," ", biggest_diamond)
                     list_biggest_diamond = temp_biggest_diamond
-                    #print(list_biggest_diamond)
                 #elif diamond_count == biggest_diamond and biggest_diamond != 0 and self.target != None:
                 #    if self.jarak(min(temp_biggest_diamond, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y)), bot_positions) < self.jarak(self.target, bot_positions):
-                #        print(self.jarak(self.target, bot_positions))
-                #        print(self.jarak(min(temp_biggest_diamond, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y)), bot_positions))
+                #        #print(self.jarak(self.target, bot_positions))
+                #        #print(self.jarak(min(temp_biggest_diamond, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y)), bot_positions))
                 #        list_biggest_diamond = temp_biggest_diamond
                 diamond_count = 0
                 temp_biggest_diamond = []
@@ -70,10 +73,14 @@ class Biggest(BaseLogic):
                 if self.jarak(bot_positions, nearest_target) <= 10:
                     self.target = nearest_target
                     print(f"nearest: {nearest_target}")
+                else:
+                    self.target = target
             else:
                 self.target = target
-            
 
+        print(red_button_pos)
+        if self.jarak(bot_positions, self.target) > self.jarak(bot_positions, red_button_pos[0]):
+            self.target = red_button_pos[0]
 
         print("Target: ", self.target)
         delta_x, delta_y = get_direction(
