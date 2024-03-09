@@ -172,7 +172,7 @@ move_delay = board.minimum_delay_between_moves / 1000
 # Game play loop
 #
 ###############################################################################
-DELTA = 0.1
+DELTA = 1
 while True:
     # Find our info among the bots on the board
     board_bot = board.get_bot(bot)

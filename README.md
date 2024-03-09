@@ -1,33 +1,24 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 # 💎 Etimo Diamonds 2
 
-Diamonds is a programming challenge. Program a bot and compete to get the highest score. For more information:
+## Algoritma Greedy
 
--   [Project Specification](https://docs.google.com/document/d/13cbmMVXviyu8eKQ6heqgDzt4JNNMeAZO/edit)
--   [Get Started with Diamonds](https://docs.google.com/document/d/1L92Axb89yIkom0b24D350Z1QAr8rujvHof7-kXRAp7c/edit)
+Algoritma Greedy adalah algoritma yang digunakan untuk memecahkan permasalahan secara langkah per langkah sedemikian sehingga pada setiap langkahnya memilih pilihan yang terbaik yang dapat diperoleh saat itu tanpa memperhatikan konsekuensi kedepannya dengan harapan pilihan tersebut akan mengantarkan kita pada solusi optimal global. Pada algoritma greedy, setiap pilihan yang telah diambil tidak dapat diubah pada langkah selanjutnya.
 
-## Installing Dependencies 🔨
+Pada permainan ini, Kami menggunakan algoritma greedy gradien. Kita membuat sebuah fungsi dalam bentuk dua dimensi yang menerima posisi koordinat x dan y serta seluruh state atau nilai dari permainan yang berupa Game Object seperti diamond ataupun player lain. Apabila kita membuat sebuah grafik pada koordinat 2D, akan terbentuk sebuah lembah. Lembah yang paling dalam memiliki arti sebuah koordinat dimana diamond akan terkumpul. kita tidak perlu menghitung nilai fungsi pada seluruh papan, namun hanya perlu empat koordinat yang dapat dituju oleh bot saat ini, ditambah satu posisi koordinat bot.
 
-1. Clone this repository and move to the root of this project's directory
+Alasan kami menggunakan startegi ini adalah : 
+1. Bot akan bergerak ke area dengan konsentrasi diamond tertinggi yang jaraknya paling dekat dan memprioritaskan pengambilan diamond dengan poin tertinggi yang dapat ditampung oleh bot (diamond merah).
+2. Selama perjalanan ke area dengan konsentrasi diamond banyak, jika ada diamond yang dekat maka bot juga akan mengambil diamond itu.
+3. Bot akan cenderung kembali ke base saat waktu tersisa 10 detik sehingga bot akan mengamankan diamond yang ada di inventory daripada harus mengambil diamond dan tidak ada waktu untuk kembali ke base.
+4. Bot memiliki mekanisme kembali ke base yang cukup baik sehingga dapat meminimalisasi kehilangan poin.
 
-    ```
-    git clone https://github.com/haziqam/tubes1-IF2110-bot-starter-pack.git
-    cd ./tubes1-IF2110-bot-starter-pack
-    ```
-
-2. Install dependencies
-
-    ```
-    pip install -r requirements.txt
-    ```
 
 ## How to Run 💻
 
 1. To run one bot
 
     ```
-    python main.py --logic Random --email=your_email@example.com --name=your_name --password=your_password --team etimo
+    python main.py --logic Gradient --email=your_email@example.com --name=your_name --password=your_password --team etimo
     ```
 
 2. To run multiple bots simultaneously
@@ -55,6 +46,12 @@ Diamonds is a programming challenge. Program a bot and compete to get the highes
 -   If you run multiple bots, make sure each emails and names are unique
 -   The email could be anything as long as it follows a correct email syntax
 -   The name, and password could be anything without any space
+
+## Author
+1. Keanu Amadius Gonza Wrahatno  (13522082@mahasiswa.itb.ac.id)
+2. Muhammad Atpur Rafif  (13522086@mahasiswa.itb.ac.id)
+3. Muhamad Rafli Rasyiidin  (13522088@mahasiswa.itb.ac.id)
+
 
 ## Credits 🪙
 
