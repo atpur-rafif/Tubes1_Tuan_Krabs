@@ -16,7 +16,9 @@ Alasan kami menggunakan startegi ini adalah :
 ## How to Run 💻
 
 1. To run one bot
-
+    ```
+    cd src
+    ```
     ```
     python main.py --logic Gradient --email=your_email@example.com --name=your_name --password=your_password --team etimo
     ```
@@ -24,13 +26,17 @@ Alasan kami menggunakan startegi ini adalah :
 2. To run multiple bots simultaneously
 
     For Windows
-
+    ```
+    cd src
+    ```
     ```
     ./run-bots.bat
     ```
 
     For Linux / (possibly) macOS
-
+    ```
+    cd src
+    ```
     ```
     ./run-bots.sh
     ```
