@@ -76,8 +76,8 @@ class BiggestLogic(BaseLogic):
             self.target = target
         else:
             nearest_target = min(diamond_positions, key=lambda pos: abs(bot_positions.x - pos.x) + abs(bot_positions.y - pos.y))
-            if self.jarak(bot_positions, self.target) <= 10 :
-                if self.jarak(bot_positions, nearest_target) <= 10:
+            if self.jarak(bot_positions, self.target) <= 3 :
+                if self.jarak(bot_positions, nearest_target) <= :
                     self.target = nearest_target
                 else:
                     self.target = target
