@@ -38,17 +38,19 @@ class GradientLogic(BaseLogic):
             if self.inventory_size - self.bot.properties.diamonds < points:
                 continue
 
-            distance = max(manhattan_distance(inp, pos) + distance_offset, 0.1)
-            if points == 1:
+            distance = manhattan_distance(inp, pos) + distance_offset
+            if distance == 0:
+                total += points * 100;
+            elif points == 1:
                 total += distance ** -2
             else:
                 total += (distance ** -1) * points
 
         for button in redButton_target:
             pos = button.position
-            distance = max(manhattan_distance(inp, pos) + distance_offset, 1)
-            if distance <= 0:
-                total -= 0.5 * (distance ** -2)
+            distance = manhattan_distance(inp, pos) + distance_offset
+            if distance == 0:
+                total -= 1;
 
         for bot in bots:
             pos = bot.position
