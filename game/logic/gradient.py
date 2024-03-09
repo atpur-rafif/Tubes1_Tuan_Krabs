@@ -69,7 +69,11 @@ class GradientLogic(BaseLogic):
 
         base = self.bot.properties.base
         distance = max(manhattan_distance(inp, base) + distance_offset, 0.1)
-        total += (2 * inventory_filled) * (distance ** -2)
+        time_weight = 1
+        time_left = self.bot.properties.milliseconds_left / 1000
+        if time_left < 10:
+            time_weight = max((10 - time_left) * 3, time_weight)
+        total += (2 * inventory_filled * time_weight) * (distance ** -2)
 
         return total
 
